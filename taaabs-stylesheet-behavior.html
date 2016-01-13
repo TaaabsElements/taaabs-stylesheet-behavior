@@ -1,0 +1,100 @@
+<!-- 
+	
+`TaaabsBehaviors.Stylesheet` is a Polymer Behavior that add features to use Stylesheets in Taaabs.
+
+Stylesheets can be either on the LocalStorage or inside a json document served on the HTTP server.
+
+@polymerBehavior TaaabsBehaviors.Stylesheet
+
+-->
+
+<script src="../jquery/dist/jquery.min.js"></script>
+<script>
+ /* global TaaabsBehaviors:true, $ */
+ /* exported TaaabsBehaviors */
+
+ var TaaabsBehaviors = TaaabsBehaviors || {};
+
+ /**
+ *`TaaabsBehaviors.Stylesheet` is a Polymer Behavior that add features to use Stylesheets in Taaabs.
+ *
+ *Stylesheets can be either on the LocalStorage or inside a json document served on the HTTP server.
+ *
+ *@polymerBehavior TaaabsBehaviors.Stylesheet
+ */
+ TaaabsBehaviors.Stylesheet = {
+   properties: {
+     mode: {
+       type: String
+     },
+     urlFileStylesheet: {
+         type: String,
+         value: './setting/stylesheet.json'
+       }
+   },
+   _getMode: function (traceURI){
+     var mode ;
+     if (localStorage["stylesheetTaabs"]){
+        if (JSON.parse (localStorage.getItem("stylesheetTaabs")).indexOf(traceURI)== -1){
+          mode ="R";
+        }
+        else{
+           mode = "L";
+        }
+
+     }
+     else mode ="R";
+     return mode;
+   },
+
+
+   _getStylesheet : function(traceURI) {
+     var mode = (!!traceURI) ? this._getMode(traceURI) : 'R';
+     var that = this;
+     if (mode === 'R') {
+       return new Promise(function(resolve, reject) {
+         $.ajax({
+           url: that.urlFileStylesheet,
+           success: function(data) {
+             resolve(data.ObselType);
+           },
+           error: function(err) {
+             reject(err);
+           }
+         });
+       });
+     }
+     else {
+       return new Promise(function(resolve, reject) {
+         if (!!localStorage.getItem('stylesheetTaabs.' + traceURI)) {
+           var obselType = JSON.parse(localStorage.getItem('stylesheetTaabs.' + traceURI)).ObselType;
+           resolve(obselType);
+         } else {
+           reject('[localStorage] don\'t contains value for' + traceURI);
+         }
+       });
+     }
+   },
+   _PutStylesheet: function(traceURI, objStyle) {
+     if (localStorage["stylesheetTaabs"]){
+       // add URI Trace to array
+       if (JSON.parse (localStorage.getItem("stylesheetTaabs")).indexOf(traceURI)== -1){
+         var arrayTraceUri =  JSON.parse (localStorage.getItem("stylesheetTaabs"));
+         arrayTraceUri.push (traceURI);
+         localStorage.setItem("stylesheetTaabs",JSON.stringify(arrayTraceUri));
+
+       }
+
+       localStorage.setItem("stylesheetTaabs."+traceURI,JSON.stringify(objStyle));
+     }
+     else {
+       var arrayTraceUri = [];
+       arrayTraceUri.push (traceURI);
+       localStorage.setItem("stylesheetTaabs",JSON.stringify(arrayTraceUri));
+       localStorage.setItem("stylesheetTaabs."+traceURI,JSON.stringify(objStyle));
+
+     }
+
+   }
+ };
+</script>

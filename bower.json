@@ -1,0 +1,28 @@
+{
+  "name": "taaabs-stylesheet-behavior",
+  "version": "1.0.0",
+  "description": "`taaabs-stylesheet-behavior` is a Polymer Behavior that add features to use Stylesheets in Taaabs.",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "taaabs"
+  ],
+  "authors": [
+    "TaaabsTeam"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TaaabsElements/taaabs-stylesheet-behavior.git"
+  },
+  "main": "taaabs-stylesheet-behavior.html",
+  "license": "https://github.com/TaaabsElements/taaabs-stylesheet-behavior/LICENSE",
+  "dependencies": {
+    "polymer": "polymer/polymer#^1.0.0",
+		"jquery": "~2.1.4",
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "ignore": []
+}
