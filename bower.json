@@ -17,8 +17,7 @@
   "main": "taaabs-stylesheet-behavior.html",
   "license": "https://github.com/TaaabsElements/taaabs-stylesheet-behavior/LICENSE",
   "dependencies": {
-    "polymer": "polymer/polymer#^1.0.0",
-    "jquery": "~2.1.4"
+    "polymer": "polymer/polymer#^1.0.0"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
